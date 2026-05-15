@@ -1,0 +1,16 @@
+utilisateur_id,livre_id,date_emprunt,statut
+1,1,2024-01-01,retourne
+1,2,2024-01-15,retourne
+1,3,2024-02-01,retourne
+2,1,2024-01-05,retourne
+2,4,2024-01-20,retourne
+2,5,2024-02-10,retourne
+3,2,2024-01-10,retourne
+3,3,2024-01-25,retourne
+3,6,2024-02-05,retourne
+4,1,2024-01-12,retourne
+4,4,2024-02-01,retourne
+4,7,2024-02-20,retourne
+5,2,2024-01-08,retourne
+5,5,2024-01-22,retourne
+5,8,2024-02-08,retourne
