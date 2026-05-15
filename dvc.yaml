@@ -1,0 +1,26 @@
+stages:
+  preprocess:
+    cmd: python data/preprocess.py
+    deps:
+      - data/raw/loans.csv
+      - data/preprocess.py
+    outs:
+      - data/processed/loans_clean.csv
+
+  train:
+    cmd: python data/train.py
+    deps:
+      - data/processed/loans_clean.csv
+      - data/train.py
+    outs:
+      - models/model.pkl
+
+  evaluate:
+    cmd: python data/evaluate.py
+    deps:
+      - models/model.pkl
+      - data/processed/loans_clean.csv
+      - data/evaluate.py
+    metrics:
+      - metrics.json:
+          cache: false
