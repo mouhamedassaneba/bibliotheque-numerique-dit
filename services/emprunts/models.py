@@ -1,11 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+<<<<<<< HEAD
 
 db = SQLAlchemy()
 
 class Emprunt(db.Model):
     __tablename__ = 'emprunts'
 
+=======
+db = SQLAlchemy()
+class Emprunt(db.Model):
+    __tablename__ = 'emprunts'
+>>>>>>> feature/docker
     id = db.Column(db.Integer, primary_key=True)
     utilisateur_id = db.Column(db.Integer, nullable=False)
     livre_id = db.Column(db.Integer, nullable=False)
@@ -13,6 +19,7 @@ class Emprunt(db.Model):
     date_retour_prevue = db.Column(db.DateTime, nullable=False)
     date_retour_effectif = db.Column(db.DateTime, nullable=True)
     statut = db.Column(db.String(20), default='en_cours')
+<<<<<<< HEAD
 
     def to_dict(self):
         return {
@@ -24,3 +31,7 @@ class Emprunt(db.Model):
             'date_retour_effectif': self.date_retour_effectif.isoformat() if self.date_retour_effectif else None,
             'statut': self.statut
         }
+=======
+    def to_dict(self):
+        return {'id': self.id, 'utilisateur_id': self.utilisateur_id, 'livre_id': self.livre_id, 'date_emprunt': self.date_emprunt.isoformat(), 'date_retour_prevue': self.date_retour_prevue.isoformat(), 'date_retour_effectif': self.date_retour_effectif.isoformat() if self.date_retour_effectif else None, 'statut': self.statut}
+>>>>>>> feature/docker

@@ -27,4 +27,8 @@ class Livre(db.Model):
             'nombre_exemplaires': self.nombre_exemplaires,
             'disponible': self.disponible,
             'date_ajout': self.date_ajout.isoformat()
+<<<<<<< HEAD
         }
+=======
+        }
+>>>>>>> feature/docker

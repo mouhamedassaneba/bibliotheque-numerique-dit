@@ -1,0 +1,3 @@
+CREATE DATABASE bibliotheque_livres;
+CREATE DATABASE bibliotheque_utilisateurs;
+CREATE DATABASE bibliotheque_emprunts;

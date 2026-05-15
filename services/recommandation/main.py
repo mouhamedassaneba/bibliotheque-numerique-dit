@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+<<<<<<< HEAD
 from pydantic import BaseModel
 import pickle
 import pandas as pd
@@ -11,6 +12,13 @@ app = FastAPI(title='Service Recommandation')
 model = None
 data = None
 
+=======
+import pickle, pandas as pd, os
+from config import MODEL_PATH, DATA_PATH
+app = FastAPI(title='Service Recommandation')
+model = None
+data = None
+>>>>>>> feature/docker
 def load_model():
     global model, data
     try:
@@ -20,6 +28,7 @@ def load_model():
         if os.path.exists(DATA_PATH):
             data = pd.read_csv(DATA_PATH)
     except Exception as e:
+<<<<<<< HEAD
         print(f'Erreur chargement modele: {e}')
 
 @app.on_event('startup')
@@ -52,6 +61,27 @@ async def train_model():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+=======
+        print(f'Erreur: {e}')
+@app.on_event('startup')
+async def startup_event():
+    load_model()
+@app.get('/health')
+async def health():
+    return {'status': 'ok', 'service': 'recommandation', 'model_loaded': model is not None}
+@app.get('/recommendations/{user_id}')
+async def get_recommendations(user_id: int):
+    if data is None:
+        return {'user_id': user_id, 'recommendations': [], 'message': 'Pas de donnees'}
+    user_books = data[data['utilisateur_id'] == user_id]['livre_id'].tolist()
+    all_books = data['livre_id'].unique().tolist()
+    recommendations = [b for b in all_books if b not in user_books][:5]
+    return {'user_id': user_id, 'recommendations': recommendations}
+@app.post('/train')
+async def train_model():
+    load_model()
+    return {'message': 'Modele recharge'}
+>>>>>>> feature/docker
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host='0.0.0.0', port=5004)

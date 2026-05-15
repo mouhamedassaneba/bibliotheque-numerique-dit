@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - bibliotheque-network
+
+  livres:
+    build: ./services/livres
+    ports:
+      - "5001:5001"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/bibliotheque_livres
+    depends_on:
+      - db
+    networks:
+      - bibliotheque-network
+
+  utilisateurs:
+    build: ./services/utilisateurs
+    ports:
+      - "5002:5002"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/bibliotheque_utilisateurs
+    depends_on:
+      - db
+    networks:
+      - bibliotheque-network
+
+  emprunts:
+    build: ./services/emprunts
+    ports:
+      - "5003:5003"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/bibliotheque_emprunts
+    depends_on:
+      - db
+    networks:
+      - bibliotheque-network
+
+  recommandation:
+    build: ./services/recommandation
+    ports:
+      - "5004:5004"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+    networks:
+      - bibliotheque-network
+
+  frontend:
+    build: ./services/frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - livres
+      - utilisateurs
+      - emprunts
+      - recommandation
+    networks:
+      - bibliotheque-network
+
+volumes:
+  postgres_data:
+
+networks:
+  bibliotheque-network:
+    driver: bridge
